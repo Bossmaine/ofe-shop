@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-logo {
+  width: 100px;
+}
+
+.copyright-texts {
+  font-size: 12px;
+}
+
+.card-image {
+  max-height: 200px !important;
+  min-height: 200px !important;
+  object-fit: contain;
+}
+
+.product-title {
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+.rating svg {
+  color: #f8e825;
+}
+
+.review-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-left: 0.5rem;
+}
