@@ -1,13 +1,27 @@
-import { useParams, Link } from "react-router-dom";
-import products from "../products";
-import { Row, Col, ListGroup, Card, Image, Button } from "react-bootstrap";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Row, Col, ListGroup, Card, Image, Button, Form } from "react-bootstrap";
 import RatingStar from "../components/RatingStar";
 import { FaArrowLeft } from "react-icons/fa";
+import { useGetSingleProductQuery } from "../slices/productsSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { useState } from "react";
+import { addToCart } from "../slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 function ProductDetailsPage() {
   const { id } = useParams();
-  const product = products.find((product) => product._id === id);
-  const stock = product.countInStock > 0 ? "In Stock" : "Sold Out";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1)
+  const { data: product, isLoading, error } = useGetSingleProductQuery(id);
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({...product, quantity}));
+    navigate('/cart');
+  }
+
+  const stock = product?.countInStock > 0 ? "In Stock" : "Sold Out";
   return (
     <>
       <Link to="/">
@@ -15,6 +29,10 @@ function ProductDetailsPage() {
           <FaArrowLeft /> Go Back
         </Button>
       </Link>
+      {
+        isLoading ? (<Loader />) : error ? (<Message variant='danger'>
+          {error?.data?.message || error.error}
+        </Message>) : <>
       <Row className="mt-5">
         <Col md={5}>
           <Image src={product.image} alt={product.name} fluid />
@@ -36,8 +54,8 @@ function ProductDetailsPage() {
             </ListGroup.Item>
             <ListGroup.Item>
               <RatingStar
-                rating={product.rating}
-                numReviews={product.numReviews}
+                value={product.rating}
+                numReviews={product.reviews.length}
               />
             </ListGroup.Item>
             <ListGroup.Item>
@@ -66,20 +84,31 @@ function ProductDetailsPage() {
                   </Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Status:</Col>
-                  <Col>
-                    <strong>{stock}</strong>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
+              {
+                 stock === "In Stock" && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Quantity:</Col>
+                      <Col>
+                        <Form.Control as='select' value={quantity} onChange={event => setQuantity(Number(event.target.value))}>
+                          {
+                           [...Array(product.countInStock).keys()].map( item => (
+                            <option key={item + 1} value={item + 1}>{item + 1}</option>
+                           ))
+                          }
+                        </Form.Control>      
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )
+              }
               <ListGroup.Item>
                 <Button
                   className="btn-block"
                   variant="dark"
                   type="button"
                   disabled={product.countInStock === 0}
+                  onClick={handleAddToCart}
                 >
                   Add to Cart
                 </Button>
@@ -87,7 +116,8 @@ function ProductDetailsPage() {
             </ListGroup>
           </Card>
         </Col>
-      </Row>
+      </Row></>
+      }
     </>
   );
 }

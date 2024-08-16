@@ -46,3 +46,20 @@ code {
   font-weight: 600;
   padding-left: 0.5rem;
 }
+
+.cart-badge {
+  margin-left: 5px;
+}
+
+.cart-header {
+  padding: 0.5rem;
+}
+
+.cart-image {
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.quantity-form {
+  width: 50px !important;
+}

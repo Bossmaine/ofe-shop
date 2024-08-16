@@ -18,7 +18,7 @@ function RatingStar({ value, numReviews }) {
       <span>{star3}</span>
       <span>{star4}</span>
       <span>{star5}</span>
-      <span className="review-count">{ numReviews && `(${numReviews} Reviews)`}</span>
+      <span className="review-count">{`Reviews(${numReviews})`}</span>
     </div>
   );
 }
