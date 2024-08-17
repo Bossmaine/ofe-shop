@@ -36,7 +36,7 @@ function CartPage() {
         <h1 className="cart-header">Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
-            Your cart is empty <Link to="/">Continue Shopping</Link>
+            Your cart is empty <Link to="/">Start Shopping</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
@@ -83,9 +83,12 @@ function CartPage() {
                     <p> ${cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)} </p>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                    <Button type="button" className="btn-block" variant="dark" disabled={cartItems.length === 0} onClick={handleCheckOut}>
+                    <Button type="button" className="btn-block mb-2" variant="dark" disabled={cartItems.length === 0} onClick={handleCheckOut}>
                         Proceed to Checkout
                     </Button>
+                    <Link to='/' className="mt-3">
+                      <h6>Contiue Shoping</h6>
+                    </Link>
                 </ListGroup.Item>
             </ListGroup>
         </Card>
