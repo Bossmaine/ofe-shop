@@ -58,8 +58,14 @@ code {
 .cart-image {
   max-height: 100px;
   min-height: 100px;
+  object-fit: contain;
 }
 
 .quantity-form {
-  width: 50px !important;
+  max-width: 60px;
 }
+
+.cart-continue {
+  display: block;
+}
+

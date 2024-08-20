@@ -3,7 +3,12 @@ import Product from "../models/productModel.js";
 
 const getAllProducts = asyncHandler(async (req, res) => {
   const products = await Product.find();
-  res.json(products);
+  if(products) {
+    res.json(products);
+  } else {
+    res.status(404)
+    throw new Error('Unable to load products');
+  }
 });
 
 const getSingleProduct = asyncHandler(async (req, res) => {

@@ -43,7 +43,7 @@ function CartPage() {
             {cartItems.map((item) => (
               <ListGroup.Item key={item._id} >
                 <Row>
-                  <Col md={2} className="mb-2">
+                  <Col xs={12} sm={12} md={2} className="mb-2">
                     <Image src={item.image} alt={item.name} fluid rounded className="cart-image" />
                   </Col>
                   <Col md={3} className="mb-2">
@@ -75,7 +75,7 @@ function CartPage() {
           </ListGroup>
         )}
       </Col>
-      <Col md={4}>
+      <Col md={4} className="mt-5">
         <Card>
             <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -87,7 +87,7 @@ function CartPage() {
                         Proceed to Checkout
                     </Button>
                     <Link to='/' className="mt-3">
-                      <h6>Contiue Shoping</h6>
+                      <em className="cart-continue">Contiue Shoping</em>
                     </Link>
                 </ListGroup.Item>
             </ListGroup>
